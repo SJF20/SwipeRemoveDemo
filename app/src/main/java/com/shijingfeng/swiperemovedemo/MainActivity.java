@@ -59,14 +59,5 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initAction() {
-        findViewById(R.id.btn_one).setOnClickListener(view -> {
-
-        });
-        findViewById(R.id.btn_two).setOnClickListener(view -> {
-
-        });
-        findViewById(R.id.btn_three).setOnClickListener(view -> {
-
-        });
     }
 }
