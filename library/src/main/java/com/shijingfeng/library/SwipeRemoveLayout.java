@@ -3,6 +3,7 @@ package com.shijingfeng.library;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
@@ -44,6 +45,7 @@ public class SwipeRemoveLayout extends ViewGroup {
     private static final int MAX_SWIPE_SPEED = 1000;
 
     /** 当前展开的SwipeRemoveLayout */
+    @SuppressLint("StaticFieldLeak")
     private static SwipeRemoveLayout sViewCache;
     /** 是否已经触摸过了（用于多点触摸情况）*/
     private static boolean mIsTouching;
@@ -288,8 +290,8 @@ public class SwipeRemoveLayout extends ViewGroup {
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
         final int childCount = getChildCount();
-        int left = 0 + getPaddingLeft();
-        int right = 0 + getPaddingLeft();
+        int left = getPaddingLeft();
+        int right = getPaddingLeft();
 
         for (int i = 0; i < childCount; ++i) {
             final View childView = getChildAt(i);
@@ -319,6 +321,9 @@ public class SwipeRemoveLayout extends ViewGroup {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
     }
+
+    /** tan = y/x */
+    final double tan20 = 0.3639702342662F;
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
@@ -350,17 +355,22 @@ public class SwipeRemoveLayout extends ViewGroup {
                     mPointerId = ev.getPointerId(0);
                     break;
                 case ACTION_MOVE:
-                    final float gap = mMovePointF.x - ev.getRawX();
+                    final float scrollX = mMovePointF.x - ev.getRawX();
+                    final float scrollY = mMovePointF.y - ev.getRawY();
 
-                    if (Math.abs(gap) > mScaledTouchSlop || Math.abs(getScrollX()) > mScaledTouchSlop) {
+                    if (Math.abs(scrollX) > mScaledTouchSlop || Math.abs(getScrollX()) > mScaledTouchSlop) {
                         getParent().requestDisallowInterceptTouchEvent(true);
                     }
 
-                    if (Math.abs(gap) > mScaledTouchSlop) {
-                        mIsMoved = true;
-                    }
+                    final float ratio = Math.abs(scrollY) / Math.abs(scrollX);
 
-                    scrollBy((int) gap, 0);
+                    if (ratio < tan20) {
+                        if (Math.abs(scrollX) > mScaledTouchSlop) {
+                            mIsMoved = true;
+                        }
+
+                        scrollBy((int) scrollX, 0);
+                    }
 
                     //越界修正
                     if (mSwipeDirection == LEFT) {
@@ -398,14 +408,24 @@ public class SwipeRemoveLayout extends ViewGroup {
                                 //关闭侧滑菜单
                                 smoothClose();
                             } else if (mSwipeDirection == RIGHT) {
-                                //伸展侧滑菜单
-                                smoothExpand();
+                                if (mIsMoved) {
+                                    //伸展侧滑菜单
+                                    smoothExpand();
+                                } else {
+                                    //关闭侧滑菜单
+                                    smoothClose();
+                                }
                             }
                         } else {
                             //向左滑动
                             if (mSwipeDirection == LEFT) {
-                                //伸展侧滑菜单
-                                smoothExpand();
+                                if (mIsMoved) {
+                                    //伸展侧滑菜单
+                                    smoothExpand();
+                                } else {
+                                    //关闭侧滑菜单
+                                    smoothClose();
+                                }
                             } else if (mSwipeDirection == RIGHT) {
                                 //关闭侧滑菜单
                                 smoothClose();
@@ -414,8 +434,13 @@ public class SwipeRemoveLayout extends ViewGroup {
                     } else {
                         //没有超过滑动速度阈值
                         if (Math.abs(getScrollX()) > mLimitWidth) {
-                            //伸展侧滑菜单
-                            smoothExpand();
+                            if (mIsMoved) {
+                                //伸展侧滑菜单
+                                smoothExpand();
+                            } else {
+                                //关闭侧滑菜单
+                                smoothClose();
+                            }
                         } else {
                             //关闭侧滑菜单
                             smoothClose();
