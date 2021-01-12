@@ -1,4 +1,4 @@
-package com.shijingfeng.swiperemovedemo;
+package com.shijingfeng.app;
 
 import android.os.Bundle;
 
@@ -7,8 +7,8 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.shijingfeng.swiperemovedemo.adapter.SwipeRemoveAdapter;
-import com.shijingfeng.swiperemovedemo.bean.SwipeRemoveBean;
+import com.shijingfeng.app.bean.SwipeRemoveBean;
+import com.shijingfeng.app.adapter.SwipeRemoveAdapter;
 
 import java.util.ArrayList;
 import java.util.List;

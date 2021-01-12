@@ -1,4 +1,4 @@
-package com.shijingfeng.swiperemovedemo.bean;
+package com.shijingfeng.app.bean;
 
 public class SwipeRemoveBean {
 

@@ -1,4 +1,4 @@
-package com.shijingfeng.library;
+package com.shijingfeng.swipe_remove;
 
 import org.junit.Test;
 

@@ -1,2 +1,3 @@
-include ':app', ':library'
-rootProject.name='SwipeRemoveDemo'
+include ':app'
+include':swipe_remove'
+rootProject.name='SwipeRemove'

@@ -1,4 +1,4 @@
-package com.shijingfeng.swiperemovedemo.adapter;
+package com.shijingfeng.app.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -14,8 +14,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.shijingfeng.swiperemovedemo.R;
-import com.shijingfeng.swiperemovedemo.bean.SwipeRemoveBean;
+import com.shijingfeng.app.R;
+import com.shijingfeng.app.bean.SwipeRemoveBean;
 
 import java.util.List;
 

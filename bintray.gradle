@@ -1,0 +1,26 @@
+//推荐放在module的gradle依赖文件的开头
+apply plugin: 'com.github.panpf.bintray-publish'
+
+/**
+ * 1. 首先创建账号 (https://bintray.com/)
+ * 2. 在网站上创建 Repository 和 Package(属于 Repository)
+ * 3. 上传代码: gradlew clean build bintrayUpload -PbintrayUser="shijingfeng2019" -PbintrayKey="5c8be1565d8f6411bf91cc5844098327aa04d881" -PdryRun=false
+ */
+
+//推荐放在module的gradle依赖文件的最后面
+publish {
+    //userOrg这个是用户的组织，我们创建的是个人帐号，也就是我们的用户名（后续会介绍，必须一致，改成你自己的bintrayName）
+    userOrg = 'shijingfeng2019'
+    // 仓库名 (对应 bintray 网站的 Repository, 注: 第一次上传必须先在网站创建 Repository)
+    repoName = 'open_source'
+    //我们的组id 类比'com.github.bumptech.glide:glide:3.7.0' 中的 com.github.bumptech.glide 这一部分
+    groupId = 'com.shijingfeng.open_source'
+    //原型id 类比'com.github.bumptech.glide:glide:3.7.0' 中的glide这一部分 (对应 bintray 网站的 Package, 注: 第一次上传必须先在网站创建 Package)
+    artifactId = artifactIdName
+    //版本号 类比'com.github.bumptech.glide:glide:3.7.0' 中的3.7.0 这一部分。很重要，我们在更新aar文件的时候需要提升版本号，类似更新apk
+    publishVersion = publishVersionName
+    //描述，大致介绍自己的类库
+    desc = '侧滑删除控件'
+    //网址，可以写自己的github项目页面等
+    website = 'https://github.com/SJF20/SwipeRemove.git'
+}
