@@ -1,16 +1,8 @@
 apply plugin: 'com.android.library'
 
-ext {
-    artifactIdName = 'swipe_remove'
-    publishVersionName = '1.0.0'
-}
-
-// 远程依赖打包
-apply from: "${rootDir.path}${File.separator}bintray.gradle"
-
 android {
     compileSdkVersion 30
-    buildToolsVersion "30.0.2"
+    buildToolsVersion "30.0.3"
 
     defaultConfig {
         minSdkVersion 19
